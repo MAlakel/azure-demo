@@ -1,0 +1,9 @@
+<!-- QR -->
+<div class="content">
+  <h2>QR POC</h2>
+  <p>QR code generator POC for URL: {{currentURL}}</p>
+
+  <div class="card-container">
+    <qrcode [qrdata]="currentURL" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+  </div>
+</div>
