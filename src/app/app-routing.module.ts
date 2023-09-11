@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { QrComponent } from './qr/qr.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'client/', pathMatch: 'full' },
-  { path: '**', redirectTo: 'client/', pathMatch: 'full' },
+  { path: ':id', component: QrComponent },
+  { path: '', redirectTo: '/memberId', pathMatch: 'prefix' },
+  { path: '**', redirectTo: '', pathMatch: 'prefix' },
   // { path: 'client', redirectTo: 'client/' },
-  { path: 'client/:id', component: QrComponent },
 ];
 
 @NgModule({
