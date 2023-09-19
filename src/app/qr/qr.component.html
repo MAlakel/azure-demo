@@ -1,9 +1,10 @@
 <!-- QR -->
 <div class="content">
-  <h2>QR POC</h2>
+  <h2>QR</h2>
   <p>QR code for URL: {{currentURL}}</p>
 
   <div class="card-container">
     <qrcode [qrdata]="currentURL" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
   </div>
+  <p>Client Id / Member Id: {{clientId}}</p>
 </div>

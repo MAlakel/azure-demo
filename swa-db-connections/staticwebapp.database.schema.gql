@@ -1,0 +1,28 @@
+"""
+Add your CosmosDB NoSQL database schema in this file
+
+For example:
+
+type Book @model {
+  id: ID
+  title: String
+}
+"""
+type Member @model(name: "Member") {
+  MemberId: String @ID
+  RxSavingsPlusCurrentURL: String
+  Subfolder: String
+  SuperClient: String
+  Carrier: String
+  ClientCode: String
+  ClientName: String
+  SFDCAccountOwner: String
+  AccountOwner: String
+  OptInOrOptOut: String
+  BIN: String
+  PCN: String
+  Group: String
+  Logo: String
+  NewURL: String
+  QRcode: String
+}
