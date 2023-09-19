@@ -23,7 +23,8 @@
       "cors": {
         "origins": [
           "http://localhost:4280",
-          "https://studio.apollographql.com"
+          "https://studio.apollographql.com",
+          "https://lemon-sea-094ee300f.3.azurestaticapps.net"
         ],
         "allow-credentials": false
       },
