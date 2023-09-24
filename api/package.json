@@ -7,8 +7,9 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
-    "@azure/functions": "^4.0.0-alpha.7"
+    "@azure/functions": "^4.0.0-alpha.7",
+    "q": "^1.5.1",
+    "qrcode": "^1.5.3"
   },
-  "devDependencies": {},
   "main": "src/functions/*.js"
 }

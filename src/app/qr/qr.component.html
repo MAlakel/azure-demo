@@ -4,7 +4,12 @@
   <p>QR code for URL: {{currentURL}}</p>
 
   <div class="card-container">
-    <qrcode [qrdata]="currentURL" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    <!-- <qrcode [qrdata]="currentURL" [width]="256" [errorCorrectionLevel]="'M'"></qrcode> -->
+    <canvas id="canvas"></canvas>
+  </div>
+  <div>
+    <button type="button" (click)="downloadQR('svg')">Download SVG</button>
+    <button type="button" (click)="downloadQR('png')">Download PNG</button>
   </div>
   <p>Client Id / Member Id: {{clientId}}</p>
 </div>

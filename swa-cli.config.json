@@ -3,6 +3,7 @@
   "configurations": {
     "azure-demo": {
       "appLocation": ".",
+      "apiLocation": "api",
       "outputLocation": "dist/azure-demo",
       "appBuildCommand": "npm run build",
       "run": "npm start",
