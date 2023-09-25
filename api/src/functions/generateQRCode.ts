@@ -1,21 +1,18 @@
-const { app, input, output, HttpResponse } = require("@azure/functions");
-const QRCode = require("qrcode");
-const fs = require("fs");
-const q = require("q");
+import { app, HttpRequest, HttpResponse, HttpResponseInit, InvocationContext } from "@azure/functions";
+import * as util from "util";
+import * as QRCode from "qrcode";
+import * as q from "q";
+import * as fs from "fs";
 
-app.http("generateQRCode", {
-  methods: ["GET", "POST"],
-  authLevel: "anonymous",
-  // return: output.storageBlob(),
-  handler: async (request, context) => {
+export async function generateQRCode(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     console.log("Current directory:", __dirname);
     console.log("context", context);
     console.log("request", request);
     context.log(`Http function processed request for url "${request.url}"`);
     const currentURL = request.query.get("url");
-
+    return new HttpResponse({ body: "Test" });;
     if (!currentURL) {
-      throw Error("Invalid URL");
+        throw Error("Invalid URL");
     }
 
     const encodedURL = encodeURIComponent(currentURL);
@@ -29,16 +26,24 @@ app.http("generateQRCode", {
     console.log("encodedURL:", encodedURL);
     console.log("imageType:", imageType);
 
-    await QRCode.toFile(
-      `imgs/${encodedURL}.${imageType}`,
-      currentURL,
-      {
-        type: `${imageType}`,
-      },
-      (err) => {
-        console.log("file err:", err);
-      }
+    const QRCode_toFileWrapper_Promisifed = util.promisify(
+        (path, text, options, callback) =>
+            QRCode.toFile(path, text, options, callback)
     );
+
+    // const toFile = util.promisify(QRCode.toFile);
+    await QRCode_toFileWrapper_Promisifed(
+        `imgs/${encodedURL}.${imageType}`,
+        currentURL,
+        // {
+        //   type: `${imageType}`,
+        // },
+        (err) => {
+            console.log("callback");
+            console.log("file err:", err);
+        }
+    );
+    console.log("file saved");
 
     // await fs.readFile("imgs/9712A018601.svg", "utf8", function (err, data) {
     //   if (err) throw err;
@@ -54,17 +59,18 @@ app.http("generateQRCode", {
     const filePath = `imgs/${fileName}`;
     const rawFile = await q.nfcall(fs.readFile, filePath);
     const fileBuffer = Buffer.from(rawFile, "base64");
-    context.res = {
-      status: 202,
-      body: fileBuffer,
-      headers: {
-        "Content-Disposition": "inline",
-      },
-    };
+    // context.res = {
+    //     status: 202,
+    //     body: fileBuffer,
+    //     headers: {
+    //         "Content-Disposition": "inline",
+    //     },
+    // };
+
     const response = new HttpResponse({ body: fileBuffer });
     response.headers.set(
-      "Content-Disposition",
-      `attachment; filename="${currentURL}"`
+        "Content-Disposition",
+        `attachment; filename="${currentURL}"`
     );
     return response;
 
@@ -100,5 +106,10 @@ app.http("generateQRCode", {
     //     // return { body: `${url}!` };
     //   }
     // );
-  },
+};
+
+app.http('generateQRCode', {
+    methods: ['GET', 'POST'],
+    authLevel: 'anonymous',
+    handler: generateQRCode
 });
